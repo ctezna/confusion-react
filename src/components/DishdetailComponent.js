@@ -16,7 +16,7 @@ class DishDetial extends Component {
                 <Card>
                     <CardImg width='100%' src={dish.image} alt={dish.name} />
                     <CardBody>
-                        <h3>{dish.name}</h3>
+                        <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
@@ -26,25 +26,29 @@ class DishDetial extends Component {
         }
     }
 
-    renderComments(comments) {
-        if (comments != null)
-          return (
-            <div>
-              <h4>Comments</h4>
-              <ul className='list-unstyled'>
-                {comments.map(comment => {
-                  return (
-                    <li key={comment.id} className='mt-3 mb-3'>
-                      {comment.comment}
-                      <br/>-- {comment.author}, {(comment.date)}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        else return <div></div>;
-      }
+    renderComments(dish) {
+        if (dish != null){
+            var comments = dish.comments;
+            return (
+                <div>
+                <h4>Comments</h4>
+                <ul className='list-unstyled'>
+                    {comments.map(comment => {
+                    return (
+                        <div className='container'>
+                            <li key={comment.id} className='mt-3 mb-3'>
+                            {comment.comment}
+                            <br/>-- {comment.author}, {new Intl.DateTimeFormat('en-US',
+                            {year:'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
+                            </li>
+                        </div>
+                    );
+                    })}
+                </ul>
+                </div>
+            );
+        }else return <div></div>;
+    }
 
     render() {
         return (
@@ -54,7 +58,7 @@ class DishDetial extends Component {
                         {this.renderDish(this.props.dish)}
                     </div>
                     <div className='col-12 col-md-5 m-1'>
-                        {this.renderComments(this.props.dish.comments)}
+                        {this.renderComments(this.props.dish)}
                     </div>
                 </div>
             </div>

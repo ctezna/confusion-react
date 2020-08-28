@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import CommentForm from './CommentFormComponent';
 
 
     function RenderDish({dish}){
@@ -27,7 +28,7 @@ import { Link } from 'react-router-dom';
                 <ul className='list-unstyled'>
                     {comments.map(comment => {
                     return (
-                        <div className='container'>
+                        <div key={comment.id} className='container'>
                             <li key={comment.id} className='mt-3 mb-3'>
                             {comment.comment}
                             <br/>-- {comment.author}, {new Intl.DateTimeFormat('en-US',
@@ -37,6 +38,7 @@ import { Link } from 'react-router-dom';
                     );
                     })}
                 </ul>
+                <CommentForm />
                 </div>
             );
         }else return <div></div>;
@@ -47,6 +49,7 @@ import { Link } from 'react-router-dom';
             <div className='container'>
                 <div className='row'>
                     <Breadcrumb>
+                        <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                         <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
                         <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
                     </Breadcrumb>
